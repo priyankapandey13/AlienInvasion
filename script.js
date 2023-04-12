@@ -4,7 +4,7 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 1500;
     canvas.height = 500;
-    
+
     class InputHandler{ // Keep track of the specified user input //
         constructor(game){
             this.game = game;
@@ -19,12 +19,12 @@ window.addEventListener('load', function(){
             });
             window.addEventListener('keyup', e =>{
                 if(this.game.keys.indexOf(e.key) > -1){
-                    this.game.keys.splice(this.game.keys.indexOf(e.key), 1); 
+                    this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
                 }
                 // console.log(this.game.keys);
             })
         }
-        
+
     }
 
     class Projectile{  // handles Player laser //
@@ -36,7 +36,7 @@ window.addEventListener('load', function(){
             this.height = 3;
             this.speed = 3;
             this.markedForDeletion = false;
-            
+
         }
         update(){
             this.x += this.speed;
@@ -47,11 +47,11 @@ window.addEventListener('load', function(){
             context.fillRect(this.x, this.y, this.width, this.height);
         }
     }
-    
+
     class Parrticle{ // deals with falling screws corks and bolts comes from damaged enimy //
         scd
     }
-    
+
     class Player{ // handle Main character and its sprite sheet //
         constructor(game){
             this.game = game;
@@ -93,19 +93,19 @@ window.addEventListener('load', function(){
     }
 
     class Enemy{ // Handle different enemy types //
-        dfv 
+        dfv
     }
-    
+
     class Layer{ // individual multilayer background layer //
-        dfv 
+        dfv
     }
-    
+
     class Background{ // Handle all the layers to animate the entire game world //
-        dfv 
+        dfv
     }
     class UI{  // draw score timer and other things which needs to display //
-        dfv 
-    }    
+        dfv
+    }
     class Game{ // All logic will come togher inside this //
         constructor(width, height){
             this.width = width;
@@ -114,9 +114,19 @@ window.addEventListener('load', function(){
             this.input = new InputHandler(this);
             this.keys = [];
             this.ammo = 20;
+            this.maxAmmo = 50;
+            this.ammoTimer = 0;
+            this.ammoInterval = 500;
         }
-        update(){
+        update(deltaTime){
             this.player.update();
+            if (this.ammoTimer > this.ammoInterval) {
+                if (this.ammo < this.maxAmmo) this.ammo++;
+                this.ammoTimer = 0;
+            }
+            else{
+                this.ammoTimer += deltaTime;
+            }
         }
         draw(context){
             this.player.draw(context);
@@ -124,13 +134,17 @@ window.addEventListener('load', function(){
     }
 
     const game = new Game(canvas.width, canvas.height);
+    let lastTime = 0;
     // animation loop
-    function animate(){
+    function animate(timeStamp){
+        const deltaTime = timeStamp - lastTime;
+        // console.log(deltaTime);
+        lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update();
         game.draw(ctx);
         requestAnimationFrame(animate);
     }
-    animate();
+    animate(0);
 
 });
