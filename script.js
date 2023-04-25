@@ -12,16 +12,13 @@ window.addEventListener('load', function(){
                 if ((   (e.key === 'ArrowUp') || (e.key === 'ArrowDown')) && this.game.keys.indexOf(e.key) === -1){
                     this.game.keys.push(e.key);
                 } else if( e.key === ' '){
-                    // console.log('I am here');
                     this.game.player.shootTop();
                 }
-                // console.log(e.key);
             });
             window.addEventListener('keyup', e =>{
                 if(this.game.keys.indexOf(e.key) > -1){
                     this.game.keys.splice(this.game.keys.indexOf(e.key), 1);
                 }
-                // console.log(this.game.keys);
             })
         }
 
@@ -122,18 +119,15 @@ window.addEventListener('load', function(){
         }
     }
 
-
     class Layer{ // individual multilayer background layer //
-        dfv
     }
 
     class Background{ // Handle all the layers to animate the entire game world //
-        dfv
     }
     class UI {  // draw score timer and other things which needs to display //
         constructor(game){
             this.game = game;
-            this.fontSIze = 25;
+            this.fontSize = 25;
             this.fontFamily = 'Helvetica';
             this.color = 'white';
         }
@@ -143,15 +137,16 @@ window.addEventListener('load', function(){
             context.shadowOffsetX = 2;
             context.shadowOffsetY = 2;
             context.shadowColor = 'black';
-            context.font = this.fontSIze + 'px' + this.fontFamily;
+            context.font = this.fontSize + 'px' + this.fontFamily;
             //score
             context.fillText('Score:' + this.game.score, 20, 40);
-
             //ammo
-            // context.fillStyle = this.color;
             for (let i = 0; i< this.game.ammo; i++) {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            //timer
+            const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
+            context.fillText('Timer: ' + formattedTime, 20, 100);
             //game over messages
             if (this.game.gameOver) {
                 context.textAlign = 'center';
@@ -193,8 +188,13 @@ window.addEventListener('load', function(){
             this.gameOver = false;
             this.score = 0;
             this.winningScore = 10;
+            this.gameTime = 0;
+            this.timeLimit = 5000;
         }
         update(deltaTime){
+            if (!this.gameOver) this.gameTime += deltaTime;
+            if (this.gameTime > this.timeLimit) this.gameOver = true;
+
             this.player.update();
             if (this.ammoTimer > this.ammoInterval) {
                 if (this.ammo < this.maxAmmo) {this.ammo++;}
@@ -213,7 +213,7 @@ window.addEventListener('load', function(){
                                 projectile.markedForDeletion = true;
                                 if (enemy.lives <= 0) {
                                     enemy.markedForDeletion = true;
-                                    this.score += enemy.score;
+                                    if(!this.gameOver) this.score += enemy.score;
                                     if (this.score > this.winningScore) this.gameOver = true;
                                 }
                             }
