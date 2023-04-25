@@ -12,7 +12,7 @@ window.addEventListener('load', function(){
                 if ((   (e.key === 'ArrowUp') || (e.key === 'ArrowDown')) && this.game.keys.indexOf(e.key) === -1){
                     this.game.keys.push(e.key);
                 } else if( e.key === ' '){
-                    console.log('I am here');
+                    // console.log('I am here');
                     this.game.player.shootTop();
                 }
                 // console.log(e.key);
@@ -130,7 +130,7 @@ window.addEventListener('load', function(){
     class Background{ // Handle all the layers to animate the entire game world //
         dfv
     }
-    class UI{  // draw score timer and other things which needs to display //
+    class UI {  // draw score timer and other things which needs to display //
         constructor(game){
             this.game = game;
             this.fontSIze = 25;
@@ -152,6 +152,26 @@ window.addEventListener('load', function(){
             for (let i = 0; i< this.game.ammo; i++) {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
+            //game over messages
+            if (this.game.gameOver) {
+                context.textAlign = 'center';
+                let message1;
+                let message2;
+                if (this.game.score > this.game.winningScore) {
+                    message1 = 'You Win!';
+                    message2 = 'Well Done!';
+                } else{
+                    message1 = 'You Lose!';
+                    message2 = 'Try again next time';
+                }
+                context.font = '50px ' + this.fontFamily;
+                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 40);
+                context.font = '25px ' + this.fontFamily;
+                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 40);
+                
+            }
+
+
             context.restore();
         }
     }
@@ -166,8 +186,8 @@ window.addEventListener('load', function(){
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
-            this.ammo = 10;
-            this.maxAmmo = 20;
+            this.ammo = 20;
+            this.maxAmmo = 50;
             this.ammoTimer = 0;
             this.ammoInterval = 500;
             this.gameOver = false;
@@ -214,7 +234,7 @@ window.addEventListener('load', function(){
         }
         addEnemy(){
             this.enemies.push(new Angler1(this));
-            console.log(this.enemies);
+            // console.log(this.enemies);
         }
         checkCollision(rect1, rect2){
             return(
