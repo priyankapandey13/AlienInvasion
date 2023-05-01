@@ -243,6 +243,22 @@ window.addEventListener('load', function(){
         }
     }
 
+    class Drone extends Enemy{
+        constructor(game, x, y){
+            super(game);
+            this.width = 115;
+            this.height = 95;
+            this.x = x;
+            this.y = y;
+            this.image = document.getElementById('drone');
+            this.frameY = Math.floor(Math.random() * 2);
+            this.lives = 3;
+            this.score = this.lives;
+            this.type = 'drone';
+            this.speedX = Math.random() * -4.2 - 0.5;
+        }
+    }
+
     class Layer{ // individual multilayer background layer //
         constructor(game, image, speedModifier){
             this.game = game;
@@ -393,6 +409,12 @@ window.addEventListener('load', function(){
                                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                                     }
                                     enemy.markedForDeletion = true;
+                                    if(enemy.type === 'hive') {
+                                        for (let i = 0; i < 5; i++) {
+                                            this.enemies.push(new Drone(this, enemy.x + Math.random() * enemy.width, enemy.y + Math.random() * enemy.height * 0.5));
+                                            
+                                        }
+                                    }
                                     if(!this.gameOver) this.score += enemy.score;
                                     if (this.score > this.winningScore) this.gameOver = true;
                                 }
