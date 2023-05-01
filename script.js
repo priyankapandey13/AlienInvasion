@@ -196,7 +196,7 @@ window.addEventListener('load', function(){
             super(game);
             this.width = 228;
             this.height = 169;
-            this.y = Math.random() * (this.game.height * 0.9 - this.height);
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('angler1');
             this.frameY = Math.floor(Math.random() * 3);
             this.lives = 2;
@@ -220,12 +220,26 @@ window.addEventListener('load', function(){
             super(game);
             this.width = 99;
             this.height = 95;
-            this.y = Math.random() * (this.game.height * 0.9 - this.height);
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
             this.image = document.getElementById('lucky');
             this.frameY = Math.floor(Math.random() * 2);
             this.lives = 3;
             this.score = 15;
             this.type = 'lucky';
+        }
+    }
+    class HiveWhale extends Enemy{
+        constructor(game){
+            super(game);
+            this.width = 400;
+            this.height = 227;
+            this.y = Math.random() * (this.game.height * 0.95 - this.height);
+            this.image = document.getElementById('hivewhale');
+            this.frameY = 0;
+            this.lives = 15;
+            this.score = this.lives;
+            this.type = 'hive';
+            this.speedX = Math.random() * -1.2 - 0.2;
         }
     }
 
@@ -278,6 +292,7 @@ window.addEventListener('load', function(){
             this.color = 'white';
         }
         draw(context){
+            // context.font = '20px Bangers';
             context.save();
             context.fillStyle = this.color;
             context.shadowOffsetX = 2;
@@ -285,7 +300,8 @@ window.addEventListener('load', function(){
             context.shadowColor = 'black';
             context.font = this.fontSize + 'px' + this.fontFamily;
             //score
-            context.fillText('Score:' + this.game.score, 20, 40);
+            context.font = '25px ' + this.fontFamily;
+            context.fillText('Score: ' + this.game.score, 20, 40);
             //timer
             const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
             context.fillText('Timer: ' + formattedTime, 20, 100);
@@ -298,13 +314,13 @@ window.addEventListener('load', function(){
                     message1 = 'Congratilations! You Win.';
                     message2 = 'Well Done explorer!';
                 } else{
-                    message1 = 'You Lose!';
+                    message1 = 'You Lost this battle!';
                     message2 = 'Better luck next time';
                 }
                 context.font = '70px ' + this.fontFamily;
                 context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 20);
-                context.font = '25px ' + this.fontFamily;
-                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 20);
+                context.font = '50px ' + this.fontFamily;
+                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 30);
                 
             }
             //ammo
@@ -403,6 +419,7 @@ window.addEventListener('load', function(){
             const randomize = Math.random();
             if(randomize < 0.3) this.enemies.push(new Angler1(this));
             else if (randomize < 0.6)this.enemies.push(new Angler2(this));
+            else if (randomize < 0.8)this.enemies.push(new HiveWhale(this));
             else this.enemies.push(new LuckyFish(this));
         }
         checkCollision(rect1, rect2){
