@@ -35,6 +35,7 @@ window.addEventListener('load', function(){
             this.height = 3;
             this.speed = 3;
             this.markedForDeletion = false;
+            this.image = document.getElementById('projectile');
 
         }
         update(){
@@ -42,8 +43,7 @@ window.addEventListener('load', function(){
             if (this.x > this.game.width * 0.8) this.markedForDeletion = true;
         }
         draw(context){
-            context.fillStyle = 'yellow';
-            context.fillRect(this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.x, this.y);
         }
     }
 
@@ -348,7 +348,6 @@ window.addEventListener('load', function(){
             if(randomize < 0.3) this.enemies.push(new Angler1(this));
             else if (randomize < 0.6)this.enemies.push(new Angler2(this));
             else this.enemies.push(new LuckyFish(this));
-            console.log(this.enemies);
         }
         checkCollision(rect1, rect2){
             return(
