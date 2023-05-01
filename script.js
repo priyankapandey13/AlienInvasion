@@ -363,7 +363,7 @@ window.addEventListener('load', function(){
                                 this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                                 console.log('Im here see me');
                             }
-                            if (enemy.type = 'lucky') this.player.enterPowerUP();
+                            if (enemy.type === 'lucky') this.player.enterPowerUP();
                             else this.score--;
                         }
                         this.player.projectiles.forEach(projectile =>{
