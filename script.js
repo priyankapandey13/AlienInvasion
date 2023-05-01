@@ -65,7 +65,7 @@ window.addEventListener('load', function(){
             this.angle = 0;
             this.va = Math.random() * 0.2 - 0.1;
             this.bounced = 0;
-            this.bottomBounceBoundary = Math.random() * 100 + 60;
+            this.bottomBounceBoundary = Math.random() * 80 + 60;
             
         }
         update(){
@@ -361,7 +361,6 @@ window.addEventListener('load', function(){
                             //when enemy collides with hero 10 particles will come out
                             for (let i = 0; i < 10; i++) {
                                 this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
-                                console.log('Im here see me');
                             }
                             if (enemy.type === 'lucky') this.player.enterPowerUP();
                             else this.score--;
@@ -376,7 +375,6 @@ window.addEventListener('load', function(){
                                     // when enemy is destroyed 10 particles will fall off 
                                     for (let i = 0; i < 10; i++) {
                                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
-                                        console.log('Im here see me');
                                     }
                                     enemy.markedForDeletion = true;
                                     if(!this.gameOver) this.score += enemy.score;
