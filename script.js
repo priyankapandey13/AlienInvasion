@@ -160,7 +160,7 @@ window.addEventListener('load', function(){
         enterPowerUP(){
             this.powerUpTimer = 0;
             this.powerUp = true;
-            this.game.ammo = this.game.maxAmmo;
+            if(this.game.ammo < this.game.maxAmmo) this.game.ammo = this.game.maxAmmo;
         }
     }
 
