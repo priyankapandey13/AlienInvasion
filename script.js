@@ -405,7 +405,7 @@ window.addEventListener('load', function(){
                                 this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                                 if (enemy.lives <= 0) {
                                     // when enemy is destroyed 10 particles will fall off 
-                                    for (let i = 0; i < 10; i++) {
+                                    for (let i = 0; i < enemy.score; i++) {
                                         this.particles.push(new Particle(this, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
                                     }
                                     enemy.markedForDeletion = true;
