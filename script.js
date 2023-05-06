@@ -365,9 +365,11 @@ window.addEventListener('load', function(){
             context.fillText('Score : ' + this.game.score, 20, 40);
             context.fillText('Winning Score : ' + this.game.winningScore, 150, 40);
             context.fillText('Tips : Small fish with light bulb will give you the powerups' +  ` `, 950, 40);
+            context.fillText('Total Time : ' + this.game.timeLimit/1000 + 'sec', 150, 100);
+            
             //timer
             const formattedTime = (this.game.gameTime * 0.001).toFixed(1);
-            context.fillText('Timer: ' + formattedTime, 20, 100);
+            context.fillText('Timer : ' + formattedTime, 20, 100);
             //game over messages
             if (this.game.gameOver) {
                 context.textAlign = 'center';
